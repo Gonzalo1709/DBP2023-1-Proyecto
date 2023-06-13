@@ -1,0 +1,120 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;   
+}
+
+#body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
+    backdrop-filter: blur(10px);*/
+    background-image: url('/Users/sergioherrerajave/proyectodbp/src/images/imageGYM6.jpeg');
+    background-size: cover;
+}
+
+#form-body{
+    width: 400px;
+    min-width: 300px;
+    border-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 50px;
+    margin: 10px;
+    background:rgb(34, 34, 34);
+}
+
+#form-body img{
+    width: 150px;
+    display: block;
+    margin: 20px auto;
+}
+
+#text{
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 25px;
+}
+
+#form-body input{
+    display: block;
+    margin: auto;
+    height: 40px;
+    width: 275px;
+    padding-left: 10px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: transparent;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+
+}
+
+#form-body input[type="password"]{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+::placeholder {
+    font-size: 1rem;
+    color: rgb(255, 255, 255, .596);
+}
+
+#form-body input:hover {
+    transition: .5s;
+    border: 1px solid #ED884C;
+    color: #fff;
+}
+
+#form-body button{
+    display: block;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 78%;
+    background: transparent;
+    color: #b9c4c6;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+    border: 2px solid #F1A183;
+    transition: all .5 ease;
+}
+
+#form-body button:hover {
+    color: #d5dbdd;
+    border: 2px solid #ED884C;
+    background: linear-gradient(#c16936,#9c4222);
+}
+
+#radio-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+#radio-div input[type="radio"] {
+    margin-right: 10px;
+}
+
+#radio-div label{
+    margin-left: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+#imagen {
+    background: none;
+}

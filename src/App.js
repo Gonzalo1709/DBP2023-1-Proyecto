@@ -1,11 +1,12 @@
 import React from 'react';
-import Login from './components/Login';
+import Form from './components/form'
+import Header from './components/header'
 
 const App = () => {
   return (
     <div>
-      <h1>Inicio de Sesión</h1>
-      <Login />
+      <Header />
+      <Form />
     </div>
   );
 };
