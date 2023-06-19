@@ -1,8 +1,13 @@
 import React from 'react'
+import TableUser from './table_user';
 
 export const User = () => {
   return (
-    <div>User</div>
+    <div>
+      <TableUser />
+
+
+    </div>
   )
 }
 

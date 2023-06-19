@@ -1,0 +1,44 @@
+#body-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgb(25, 25, 25);
+    
+  }
+  
+#table-user {
+    border-collapse: collapse;
+    background-color: #f5f5f5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  
+#table-td {
+    padding: 10px;
+  }
+  
+#table-input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+#table-input[type="datetime-local"],
+#table-input[type="time"],
+#table-input[type="number"] {
+    width: auto;
+  }
+  
+#table-input[type="submit"] {
+    background-color: #f89358;
+    color: white;
+    cursor: pointer;
+  }
+  
+#table-input[type="submit"]:hover {
+    background-color: #ea8348;
+  }
