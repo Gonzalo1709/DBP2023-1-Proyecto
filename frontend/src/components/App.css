@@ -12,7 +12,19 @@
     font-family: Arial, Helvetica, sans-serif;
     /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
     backdrop-filter: blur(10px);*/
-    background-image: url('/Users/sergioherrerajave/proyectodbp/src/images/imageGYM6.jpeg');
+    background-image: url('/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/imageGYM6.jpeg');
+    background-size: cover;
+}
+
+#body2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
+    backdrop-filter: blur(10px);*/
+    background-image: url('/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/imagenGYM5.jpeg');
     background-size: cover;
 }
 
@@ -20,7 +32,7 @@
     width: 400px;
     min-width: 300px;
     border-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-left-radius: 50px;
     border-bottom-right-radius: 50px;
     margin: 10px;
     background:rgb(34, 34, 34);
@@ -42,7 +54,6 @@
 
 #form-body input{
     display: block;
-    margin: auto;
     height: 40px;
     width: 275px;
     padding-left: 10px;
@@ -55,6 +66,10 @@
     border-bottom-right-radius: 10px;
     font-size: 1rem;
     outline: none;
+
+}
+#login-form{
+    padding: 62.5px;
 
 }
 
@@ -89,32 +104,41 @@
     outline: none;
     border: 2px solid #F1A183;
     transition: all .5 ease;
+    font-size: 1.2rem;
 }
 
 #form-body button:hover {
+    transition: all .5 ease;
     color: #d5dbdd;
+    font-weight: 100;
     border: 2px solid #ED884C;
     background: linear-gradient(#c16936,#9c4222);
 }
 
-#radio-div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-#radio-div input[type="radio"] {
-    margin-right: 10px;
-}
-
-#radio-div label{
-    margin-left: 20px;
-    color: #fff;
+#td1{
+    color: #ffffff;
     text-align: center;
+}
+#td2{
+    align-items: center;
+    transform: scale(0.7);
+}
+#tr1{
+    margin-bottom: 25px;
+    align-items: right;
+    margin:auto;
+}
+#tr2{
+    margin-bottom: 25px;
+    align-items: right;
+    margin:auto;
+}
+#table1{
+    margin-left: 30px;
+
 }
 
 #imagen {
     background: none;
 }
+

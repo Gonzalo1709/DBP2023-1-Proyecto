@@ -1,14 +1,23 @@
 import React from 'react';
-import Form from './components/form'
-import Header from './components/header'
+import {Routes, Route } from 'react-router-dom';
+import DefaultPage from './components/DefaultPage';
+import Trainer from './components/trainer';
+import User from './components/user';
 
-const App = () => {
+function App() {
   return (
     <div>
-      <Header />
-      <Form />
+    <Routes>
+        <Route path="/user" element={<User />}>
+        </Route>
+        <Route path="/trainer" element={<Trainer />}>
+        </Route>
+        <Route path="/" element={<DefaultPage/>}>
+        </Route>
+    </Routes>
     </div>
   );
-};
+}
+
 
 export default App;

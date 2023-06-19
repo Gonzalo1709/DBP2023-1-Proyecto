@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from flask import Flask, jsonify, render_template, request, redirect, flash
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import PickleType
+from sqlalchemy import ForeignKey, PickleType
 from datetime import datetime
+from sqlalchemy.orm import relationship
 
 app = Flask(__name__)
 
@@ -15,6 +16,7 @@ db = SQLAlchemy(app)
 
 @dataclass
 class Users(db.Model):
+    __tablename__ = 'user'
     id: int
     email: str
     password: str
@@ -28,6 +30,7 @@ class Users(db.Model):
 
 @dataclass
 class Trainer(db.Model):
+    __tablename__ = 'trainer'
     id: int
     email: str
     password: str
@@ -43,6 +46,7 @@ class Trainer(db.Model):
 
 @dataclass
 class Sesion(db.Model):
+    __tablename__ = 'sesion'
     id: int
     entrenador_id: int
     usuario_id: int
@@ -50,10 +54,14 @@ class Sesion(db.Model):
     precio: int
 
     id = db.Column(db.Integer, primary_key=True)
-    entrenador_id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, primary_key=True)
+    entrenador_id = db.Column(db.Integer,ForeignKey("trainer.id")  ,primary_key=True)
+    usuario_id = db.Column(db.Integer,ForeignKey("user.id") ,primary_key=True)
     fecha = db.Column(db.DateTime, nullable = False)
     precio = db.Column(db.Integer, nullable = False)
+
+    entrenador = relationship("Trainer")
+    usuario = relationship("User")
+
 
     def __repr__(self):
         return f'<Sesion {self.id}>'
@@ -83,10 +91,6 @@ with app.app_context():
 @app.route('/')
 def main_menu():
     return render_template()
-
-@app.route('/static/<path:filename>')
-def serve_static(filename):
-    return app.send_static_file(filename)
 
 @app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_users():
@@ -154,6 +158,30 @@ def route_sesion():
     elif request.method == 'DELETE':
         sesion = Sesion.query.get(request.form['id'])
         db.session.delete(sesion)
+        db.session.commit()
+        return 'SUCCESS'
+
+@app.route('/solicitudes', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def route_solicitudes():
+    if request.method == 'GET':
+        solicitudes = Solicitudes.query.all()
+        return jsonify([solicitudes.serialize() for solicitudes in solicitudes])
+    elif request.method == 'POST':
+        solicitudes = Solicitudes(id=request.form['id'], usuario_id=request.form['usuario_id'], entrenador_id=request.form['entrenador_id'], fecha=request.form['fecha'], precio=request.form['precio'])
+        db.session.add(solicitudes)
+        db.session.commit()
+        return 'SUCCESS'
+    elif request.method == 'PUT':
+        solicitudes = Solicitudes.query.get(request.form['id'])
+        solicitudes.usuario_id = request.form['usuario_id']
+        solicitudes.entrenador_id = request.form['entrenador_id']
+        solicitudes.fecha = request.form['fecha']
+        solicitudes.precio = request.form['precio']
+        db.session.commit()
+        return 'SUCCESS'
+    elif request.method == 'DELETE':
+        solicitudes = Solicitudes.query.get(request.form['id'])
+        db.session.delete(solicitudes)
         db.session.commit()
         return 'SUCCESS'
     
