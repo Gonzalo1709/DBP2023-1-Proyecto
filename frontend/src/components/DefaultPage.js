@@ -1,13 +1,28 @@
 import React from 'react'
 import './App.css'
 import imagen1 from "/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/clipart1363971-2 (1).png"
+import { useState } from 'react';
 
 export const Form = () => {
   const handleRegisterUser = () => {
-    if(document.getElementById('radio-option-1').checked)
-    window.open('/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/build/static/js', '_blank');
-    alert('Usuario registrado');
-  }
+    if (document.getElementById('radio-option-2').checked) {
+      window.location.reload();
+      alert('Usuario registrado');
+    } else if (document.getElementById('radio-option-1').checked) {
+      alert('Solo se pueden registrar usuarios');
+    } else {
+      alert('Seleccione una opcion');
+    }
+  };
+
+  const handleLogin = () => {
+    if (document.getElementById('radio-option-2').checked) {
+      setRenderUserLogin(true);
+    }
+  };
+
+  const [renderUserLogin, setRenderUserLogin] = useState(false);
+  
   return (
     <body id="body">
         <div id="form-body">
@@ -30,11 +45,13 @@ export const Form = () => {
                     </td>
                   </tr>
                 </table>
-                <button>Iniciar Sesion</button>
+                <button type="button" onClick={handleLogin}>Iniciar Sesion</button>
                 <button type="button" onClick={handleRegisterUser}>Registrar Usuario</button>
             </form>
+            {renderUserLogin && <Userlogin />}
         </div>
     </body>
   )
 }
-export default Form;
+
+export default Userlogin;

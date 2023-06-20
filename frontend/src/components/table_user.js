@@ -23,7 +23,7 @@ export const TableUser = () => {
                 <td id='table-td'><input id="table-input" type= ""></input></td>
             </tr>
             <tr>
-                <td id='table-td'>Precio</td>
+                <td id='table-td'>Precio S/.</td>
                 <td id='table-td'><input id="table-input" type= "number"></input></td>
             </tr>
             <tr>
