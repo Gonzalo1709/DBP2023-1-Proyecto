@@ -1,5 +1,5 @@
 import React from 'react'
-import TableUser from './table_user';
+import './table_user'
 
 export const Userlogin = () => {
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
@@ -17,7 +17,6 @@ export const Userlogin = () => {
 
   return (
     <div>
-      <TableUser />
         <div id="body2">
         <div id="form-body2">
           <p id="text2">Bienvenido usuario</p>

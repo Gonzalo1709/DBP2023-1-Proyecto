@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css'
 import imagen1 from "/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/clipart1363971-2 (1).png"
 import { useState } from 'react';
+import Userlogin from './user';
 
 export const Form = () => {
   const handleRegisterUser = () => {
@@ -54,4 +55,4 @@ export const Form = () => {
   )
 }
 
-export default Userlogin;
+export default Form;
