@@ -1,14 +1,14 @@
 import React from 'react'
 import "/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/components/table_user.css"
 
-export const TableUser = () => {
+export const TableUser = (fecha) => {
   return (
     <div id = "body-table">
     <table id="table-user">
         <tbody>
             <tr>
                 <td id='table-td'>Fecha</td>
-                <td id='table-td'><input id="table-input" type= "datetime-local"></input></td>
+                <td id='table-td'><p>{fecha}</p></td>
             </tr>
             <tr>
                 <td id='table-td'>Duración</td>
@@ -32,7 +32,7 @@ export const TableUser = () => {
         </tbody>
     </table>
     </div>
-  )
+  ) 
 }
 
 export default TableUser;

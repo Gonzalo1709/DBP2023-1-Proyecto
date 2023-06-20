@@ -4,8 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey, PickleType
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -60,7 +62,7 @@ class Sesion(db.Model):
     precio = db.Column(db.Integer, nullable = False)
 
     entrenador = relationship("Trainer")
-    usuario = relationship("User")
+    usuario = relationship("Users")
 
 
     def __repr__(self):
@@ -96,9 +98,10 @@ def main_menu():
 def route_users():
     if request.method == 'GET':
         users = Users.query.all()
-        return jsonify([user.serialize() for user in users])
+        return jsonify(users)
     elif request.method == 'POST':
-        users = Users(email=request.form['email'], password=request.form['password'])
+        user_form = request.get_json()
+        users = Users(email=user_form['email'], password=user_form['password'])
         db.session.add(users)
         db.session.commit()
         return 'SUCCESS'
@@ -118,7 +121,7 @@ def route_users():
 def route_trainers():
     if request.method == 'GET':
         trainers = Trainer.query.all()
-        return jsonify([trainer.serialize() for trainer in trainers])
+        return jsonify(trainers)
     elif request.method == 'POST':
         trainer = Trainer(email=request.form['email'], password=request.form['password'])
         db.session.add(trainer)
@@ -140,7 +143,7 @@ def route_trainers():
 def route_sesion():
     if request.method == 'GET':
         sesion = Sesion.query.all()
-        return jsonify([sesion.serialize() for sesion in sesion])
+        return jsonify(sesion)
     elif request.method == 'POST':
         sesion = Sesion(id=request.form['id'], entrenador_id=request.form['entrenador_id'], usuario_id=request.form['usuario_id'], fecha=request.form['fecha'], hora=request.form['hora'], precio=request.form['precio'])
         db.session.add(sesion)
@@ -165,7 +168,7 @@ def route_sesion():
 def route_solicitudes():
     if request.method == 'GET':
         solicitudes = Solicitudes.query.all()
-        return jsonify([solicitudes.serialize() for solicitudes in solicitudes])
+        return jsonify(solicitudes)
     elif request.method == 'POST':
         solicitudes = Solicitudes(id=request.form['id'], usuario_id=request.form['usuario_id'], entrenador_id=request.form['entrenador_id'], fecha=request.form['fecha'], precio=request.form['precio'])
         db.session.add(solicitudes)

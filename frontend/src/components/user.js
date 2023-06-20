@@ -1,15 +1,22 @@
 import React from 'react'
-import './table_user'
+// eslint-disable-next-line
+import TableUser from './table_user';
 
 export const Userlogin = () => {
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
+
+const handleClick = (event) => {
+  console.log(event);
+}
 
   const renderDaysOfMonth = () => {
     const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
     const days = [];
   
     for (let i = 1; i <= daysInMonth; i++) {
-      days.push(<li key={i}>{i}</li>);
+      // eslint-disable-next-line
+      const current_date = `${i}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
+      days.push(<li onClick={handleClick}>{i}</li>);
     }
   
     return days;
