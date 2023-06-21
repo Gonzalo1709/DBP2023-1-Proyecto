@@ -5,15 +5,58 @@ import { useState } from 'react';
 import Userlogin from './user';
 
 function createUser (mail, pass) {
-  const data = {
+  let data = {
     email: mail,
     password: pass
+  }
+  let usuarios_existentes = [];
+  fetch('http://localhost:5001/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+  .then(response => {
+    usuarios_existentes = response;
+  })
+  if (usuarios_existentes.find(user => user.email === mail)) {
+    alert('El usuario ya existe');
+    return;
   }
   fetch('http://localhost:5001/users', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json'
+    }
+  })
+}
+
+function checkUser (mail, pass, trainer = false) {
+  let data = {
+    email: mail,
+    password: pass,
+  }
+  let route = '';
+  if (trainer) {
+    route = 'http://localhost:5001/trainers';
+  } else {
+    route = 'http://localhost:5001/users';
+  }
+  fetch(route, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(response => response.json())
+  .then(data => {
+    let user = data.find(user => user.email === mail);
+    if (user.password === pass) {
+      console.log('Usuario logeado');
+      return true;
+    } else {
+      alert('Usuario o contraseña incorrectos');
+      return false;
     }
   })
 }
@@ -35,8 +78,15 @@ export const Form = () => {
   };
 
   const handleLogin = () => {
-    if (document.getElementById('option_usuario').checked) {
-      window.location.href = "/User"
+    if (!document.getElementById('option_usuario').checked && !document.getElementById('option_trainer').checked) {
+      alert('Seleccione una opcion');
+    } 
+    else {
+      if(checkUser(document.getElementById('email').value, document.getElementById('password').value, document.getElementById('option_trainer').checked)){
+        localStorage.setItem('email', document.getElementById('email').value);
+        window.location.href = "http://localhost:3000/user";
+      }
+
     }
   };
 

@@ -3,7 +3,9 @@ import React from 'react'
 import TableUser from './table_user';
 
 export const Userlogin = () => {
-  const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
+
+const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
+const email_de_usuario = localStorage.getItem('email');
 
 const handleClick = (event) => {
   console.log(event);
@@ -26,7 +28,7 @@ const handleClick = (event) => {
     <div>
         <div id="body2">
         <div id="form-body2">
-          <p id="text2">Bienvenido usuario</p>
+          <p id="text2">Bienvenido usuario {email_de_usuario} </p>
         </div>
         <div className="calendar">
           <div className="month">

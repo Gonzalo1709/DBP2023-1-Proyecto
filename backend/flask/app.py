@@ -106,13 +106,13 @@ def route_users():
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'PUT':
-        user = Users.query.get(request.form['id'])
-        user.email = request.form['email']
-        user.password = request.form['password']
+        user = Users.query.get(request.get_json()['id'])
+        user.email = request.get_json()['email']
+        user.password = request.get_json()['password']
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'DELETE':
-        user = Users.query.get(request.form['id'])
+        user = Users.query.get(request.get_json()['id'])
         db.session.delete(user)
         db.session.commit()
         return 'SUCCESS'
@@ -123,18 +123,18 @@ def route_trainers():
         trainers = Trainer.query.all()
         return jsonify(trainers)
     elif request.method == 'POST':
-        trainer = Trainer(email=request.form['email'], password=request.form['password'])
+        trainer = Trainer(email=request.get_json()['email'], password=request.get_json()['password'])
         db.session.add(trainer)
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'PUT':
-        trainer = Trainer.query.get(request.form['id'])
-        trainer.email = request.form['email']
-        trainer.password = request.form['password']
+        trainer = Trainer.query.get(request.get_json()['id'])
+        trainer.email = request.get_json()['email']
+        trainer.password = request.get_json()['password']
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'DELETE':
-        trainer = Trainer.query.get(request.form['id'])
+        trainer = Trainer.query.get(request.get_json()['id'])
         db.session.delete(trainer)
         db.session.commit()
         return 'SUCCESS'
