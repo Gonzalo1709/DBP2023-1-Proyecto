@@ -54,11 +54,16 @@ function checkUser(mail, pass, trainer = false) {
       .then(response => response.json())
       .then(data => {
         let user = data.find(user => user.email === mail);
-        if (user && user.password === pass) {
+        console.log(user);
+
+        if (user === undefined) {
+          alert("El usuario no existe");
+        }
+        else if (user.password === pass) {
           console.log('Usuario logeado');
           resolve(true); // Resuelve la promesa
         } else {
-          alert('Usuario o contraseña incorrectos');
+          console.log('Usuario o contraseña incorrectos')
           resolve(false); // Resuelve la promesa
         }
       })
@@ -84,18 +89,24 @@ export const Form = () => {
     }
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => { // Se tiene que especificar que es async para poder resolver las promesas
     if (!document.getElementById('option_usuario').checked && !document.getElementById('option_trainer').checked) {
       alert('Seleccione una opcion');
     } 
     else {
-      console.log(checkUser(document.getElementById('email').value, document.getElementById('password').value, document.getElementById('option_trainer').checked));
-      if(checkUser(document.getElementById('email').value, document.getElementById('password').value, document.getElementById('option_trainer').checked)){
+      let login_valido = false;
+      login_valido = await checkUser(document.getElementById('email').value, document.getElementById('password').value, document.getElementById('option_trainer').checked); // El await es para esperar a que se resuelva la promesa
+      if(login_valido && !document.getElementById('option_trainer').checked){
         localStorage.setItem('email', document.getElementById('email').value);
-        console.log(localStorage.getItem('email'));
         window.location.href = "http://localhost:3000/user";
       }
-
+      else if(login_valido && document.getElementById('option_trainer').checked){
+        localStorage.setItem('email', document.getElementById('email').value);
+        window.location.href = "http://localhost:3000/trainer";
+      }
+      else{
+        alert('Usuario o contraseña incorrectos');
+      }
     }
   };
 
