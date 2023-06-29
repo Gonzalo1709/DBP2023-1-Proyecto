@@ -1,5 +1,6 @@
 import React from 'react'
-import "/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/components/table_user.css"
+import "./table_user.css"
+
 
 export const TableUser = (fecha) => {
   return (

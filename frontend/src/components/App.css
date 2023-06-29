@@ -4,7 +4,7 @@
     box-sizing: border-box;   
 }
 
-#body{
+body{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +12,7 @@
     font-family: Arial, Helvetica, sans-serif;
     /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
     backdrop-filter: blur(10px);*/
-    background-image: url('/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/imageGYM6.jpeg');
+    background-image: url('../images/imageGYM6.jpeg');
     background-size: cover;
 }
 
@@ -24,7 +24,7 @@
     font-family: Arial, Helvetica, sans-serif;
     /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
     backdrop-filter: blur(10px);*/
-    background-image: url('/Users/sergioherrerajave/proyectdbp2023/DBP2023-1-Proyecto/frontend/src/images/imagenGYM5.jpeg');
+    background-image: url('../images/imagenGYM5.jpeg');
     background-size: cover;
 }
 

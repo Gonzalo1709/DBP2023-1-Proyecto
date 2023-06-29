@@ -101,6 +101,8 @@ def route_users():
         return jsonify(users)
     elif request.method == 'POST':
         user_form = request.get_json()
+        if Users.query.filter_by(email=user_form['email']).first() is not None:
+            return jsonify('USEREXISTS')
         users = Users(email=user_form['email'], password=user_form['password'])
         db.session.add(users)
         db.session.commit()
