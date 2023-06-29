@@ -54,16 +54,12 @@ function checkUser(mail, pass, trainer = false) {
       .then(response => response.json())
       .then(data => {
         let user = data.find(user => user.email === mail);
-        console.log(user);
-
         if (user === undefined) {
           alert("El usuario no existe");
         }
         else if (user.password === pass) {
-          console.log('Usuario logeado');
           resolve(true); // Resuelve la promesa
         } else {
-          console.log('Usuario o contraseña incorrectos')
           resolve(false); // Resuelve la promesa
         }
       })
