@@ -118,6 +118,13 @@ def route_users():
         db.session.delete(user)
         db.session.commit()
         return 'SUCCESS'
+
+@app.route('/users/<id>', methods=['GET'])
+def route_user(id):
+    if request.method == 'GET':
+        user = Users.query.get(id)
+        return jsonify(user)
+
     
 @app.route('/trainer', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_trainers():
