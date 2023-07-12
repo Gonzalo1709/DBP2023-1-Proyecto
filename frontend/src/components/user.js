@@ -1,34 +1,34 @@
-import React from 'react'
+import React from 'react';
 // eslint-disable-next-line
 import TableUser from './table_user';
+import './table_user.css'
 
 export const Userlogin = () => {
+  const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
+  const email_de_usuario = localStorage.getItem('email');
 
-const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
-const email_de_usuario = localStorage.getItem('email');
-
-const handleClick = (event) => {
-  console.log(event);
-}
+  const handleClick = (event) => {
+    console.log(event);
+  };
 
   const renderDaysOfMonth = () => {
     const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
     const days = [];
-  
+
     for (let i = 1; i <= daysInMonth; i++) {
       // eslint-disable-next-line
       const current_date = `${i}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-      days.push(<li onClick={handleClick}>{i}</li>);
+      days.push(<li key={i} onClick={handleClick}>{i}</li>);
     }
-  
+
     return days;
   };
 
   return (
     <div>
-        <div id="body2">
+      <div id="body2">
         <div id="form-body2">
-          <p id="text2">Bienvenido usuario {email_de_usuario} </p>
+          <p id="text2">Bienvenido Usuario {email_de_usuario} </p>
         </div>
         <div className="calendar">
           <div className="month">
@@ -45,9 +45,7 @@ const handleClick = (event) => {
             <li>Sa</li>
             <li>Su</li>
           </ul>
-          <ul className="days">
-            {renderDaysOfMonth()}
-          </ul>
+          <ul className="days">{renderDaysOfMonth()}</ul>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ function createUser (mail, pass) {
     email: mail,
     password: pass
   }
-  fetch('http://localhost:5001/users', {
+  fetch('https://zergixz.pythonanywhere.com/users', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
@@ -38,9 +38,9 @@ function checkUser(mail, pass, trainer = false) {
     let route = '';
     
     if (trainer) {
-      route = 'http://localhost:5001/trainers';
+      route = 'https://zergixz.pythonanywhere.com/trainers';
     } else {
-      route = 'http://localhost:5001/users';
+      route = 'https://zergixz.pythonanywhere.com/users';
     }
     
     fetch(route, {
@@ -116,6 +116,7 @@ export const Form = () => {
             <input type="email" id="email" placeholder="Email"></input>
             <input type="password" id="password" placeholder="Contraseña"></input>
             <table id = "table1">
+              <tbody>
               <tr id = "tr1">
                 <td id="td1">Trainer</td>
                 <td id="td2">
@@ -128,6 +129,7 @@ export const Form = () => {
                   <input type="radio" id="option_usuario" name="radio-option" />
                 </td>
               </tr>
+              </tbody>
             </table>
             <button type="button" onClick={handleLogin}>Iniciar Sesion</button>
             <button type="button" onClick={handleRegisterUser}>Registrar Usuario</button>
