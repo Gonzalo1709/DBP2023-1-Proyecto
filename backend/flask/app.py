@@ -90,9 +90,6 @@ class Solicitudes(db.Model):
 with app.app_context():
     db.create_all()
 
-@app.route('/')
-def main_menu():
-    return render_template()
 
 @app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_users():
