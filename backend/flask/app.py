@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 from dataclasses import dataclass
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
@@ -25,6 +27,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.id}>'
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'password': self.password
+        }
 
 
 class Trainer(db.Model):
@@ -36,6 +45,14 @@ class Trainer(db.Model):
 
     def __repr__(self):
         return f'<Trainer {self.id}>'
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'password': self.password,
+            'calificación' : self.calificacion
+        }
 
 
 class Sesion(db.Model):
@@ -51,18 +68,15 @@ class Sesion(db.Model):
 
     def __repr__(self):
         return f'<Sesion {self.id}>'
-
-
-class Solicitudes(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    usuario_id = db.Column(db.Integer, primary_key=True)
-    entrenador_id = db.Column(db.Integer, primary_key=True)
-    fecha = db.Column(db.DateTime, nullable=False)
-    precio = db.Column(db.Integer, nullable=False)
-
-    def __repr__(self):
-        return f'<Solicitudes {self.id}>'
-
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'entrenador_id': self.entrenador_id,
+            'usuario_id': self.usuario_id,
+            'fecha' : self.fecha,
+            'precio' : self.precio
+        }
 
 with app.app_context():
     db.create_all()
@@ -72,7 +86,8 @@ with app.app_context():
 def route_users():
     if request.method == 'GET':
         users = User.query.all()
-        return jsonify(users)
+        users_data = [user.to_dict() for user in users]
+        return jsonify(users_data)
     elif request.method == 'POST':
         user_form = request.get_json()
         if User.query.filter_by(email=user_form['email']).first() is not None:
@@ -105,7 +120,8 @@ def route_user(id):
 def route_trainers():
     if request.method == 'GET':
         trainers = Trainer.query.all()
-        return jsonify(trainers)
+        trainers_data = [trainer.to_dict() for trainer in trainers]
+        return jsonify(trainers_data)
     elif request.method == 'POST':
         trainer = Trainer(email=request.get_json()['email'], password=request.get_json()['password'],calificacion = request.get_json()['calificacion'])
         db.session.add(trainer)
@@ -127,8 +143,9 @@ def route_trainers():
 @app.route('/sesions', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_sesion():
     if request.method == 'GET':
-        sesion = Sesion.query.all()
-        return jsonify(sesion)
+        sesions = User.query.all()
+        sesions_data = [sesion.to_dict() for sesion in sesions]
+        return jsonify(sesions_data)
     elif request.method == 'POST':
         sesion = Sesion(id=request.get_json()['id'], entrenador_id=request.get_json()['entrenador_id'],
                         usuario_id=request.get_json()['usuario_id'], fecha=request.get_json()['fecha'],
@@ -149,34 +166,3 @@ def route_sesion():
         db.session.delete(sesion)
         db.session.commit()
         return 'SUCCESS'
-
-
-@app.route('/solicitudes', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def route_solicitudes():
-    if request.method == 'GET':
-        solicitudes = Solicitudes.query.all()
-        return jsonify(solicitudes)
-    elif request.method == 'POST':
-        solicitudes = Solicitudes(id=request.get_json()['id'], usuario_id=request.get_json()['usuario_id'],
-                                  entrenador_id=request.get_json()['entrenador_id'], fecha=request.get_json()['fecha'],
-                                  precio=request.get_json()['precio'])
-        db.session.add(solicitudes)
-        db.session.commit()
-        return 'SUCCESS'
-    elif request.method == 'PUT':
-        solicitudes = Solicitudes.query.get(request.get_json()['id'])
-        solicitudes.usuario_id = request.get_json()['usuario_id']
-        solicitudes.entrenador_id = request.get_json()['entrenador_id']
-        solicitudes.fecha = request.get_json()['fecha']
-        solicitudes.precio = request.get_json()['precio']
-        db.session.commit()
-        return 'SUCCESS'
-    elif request.method == 'DELETE':
-        solicitudes = Solicitudes.query.get(request.get_json()['id'])
-        db.session.delete(solicitudes)
-        db.session.commit()
-        return 'SUCCESS'
-
-
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5001, debug=True)
