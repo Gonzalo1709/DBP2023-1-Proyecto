@@ -8,7 +8,8 @@ export const Userlogin = () => {
   const email_de_usuario = localStorage.getItem('email');
 
   const handleClick = (event) => {
-    console.log(event);
+    console.log(event.target._reactInternals.key);
+    window.location.href = "http://localhost:3000/table_user";
   };
 
   const renderDaysOfMonth = () => {

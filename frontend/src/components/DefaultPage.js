@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import imagen1 from '../images/clipart1363971-2 (1).png'
 import { useState } from 'react';
@@ -94,10 +94,12 @@ export const Form = () => {
       login_valido = await checkUser(document.getElementById('email').value, document.getElementById('password').value, document.getElementById('option_trainer').checked); // El await es para esperar a que se resuelva la promesa
       if(login_valido && !document.getElementById('option_trainer').checked){
         localStorage.setItem('email', document.getElementById('email').value);
+        localStorage.setItem('loading', true);
         window.location.href = "http://localhost:3000/user";
       }
       else if(login_valido && document.getElementById('option_trainer').checked){
         localStorage.setItem('email', document.getElementById('email').value);
+        localStorage.setItem('loading', true);
         window.location.href = "http://localhost:3000/trainer";
       }
       else{
@@ -107,6 +109,10 @@ export const Form = () => {
   };
 
   const [renderUserLogin, setRenderUserLogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   
   return (
     <div id="form-body">

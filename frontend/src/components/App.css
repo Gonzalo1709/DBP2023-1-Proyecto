@@ -4,6 +4,96 @@
     box-sizing: border-box;   
 }
 
+#Sesiones{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgb(34, 34, 34);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+#CabeceraTablaHorizontal{
+    margin-top: 20px;
+    background-color: white;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgb(34, 34, 34);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all .5s ease;
+    background-color: white;
+}
+
+#ColumnaDetabla{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgb(34, 34, 34);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+#Categorias{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    background: rgb(34, 34, 34);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid #fff;
+    cursor: pointer;
+    transition: all .5s ease;
+    background-color: white;
+}
+
+#loading{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgb(34, 34, 34);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#loading img{
+    width: 100px;
+    height: 100px;
+    animation: loading 1s infinite;
+}
+
 body{
     display: flex;
     align-items: center;

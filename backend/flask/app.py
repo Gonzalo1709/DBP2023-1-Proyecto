@@ -63,9 +63,6 @@ class Session(db.Model):
     fecha = db.Column(db.DateTime, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
 
-    entrenador = relationship("Trainer")
-    usuario = relationship("User")
-
     def __repr__(self):
         return f'<Session {self.id}>'
 
@@ -77,6 +74,16 @@ class Session(db.Model):
             'fecha': str(self.fecha),
             'precio': self.precio
         }
+    
+# Example JSON body for Session:
+# [
+#     {
+#         "id": 1,
+#         "entrenador_id": 1,
+#         "usuario_id": 1,
+#         "fecha": "2021-05-01 10:00:00",
+#         "precio": 100
+#     },
 
 with app.app_context():
     db.create_all()
@@ -153,19 +160,24 @@ def route_session():
         sessions = Session.query.all()
         sessions_data = [session.to_dict() for session in sessions]
         return jsonify(sessions_data)
-
+    
     elif request.method == 'POST':
-        session_data = request.get_json()
-        for session_form in session_data:
-            session = Session(
-                id=session_form['id'],
-                entrenador_id=session_form['entrenador_id'],
-                usuario_id=session_form['usuario_id'],
-                precio=session_form['precio']
-            )
-            db.session.add(session)
-        db.session.commit()
-        return 'SUCCESS'
+        try:
+            session_data = request.get_json()
+            # get all sessions and create an id by length of sessions
+            sessions = Session.query.all()
+            current_id = len(sessions) + 1
+            for session_form in session_data:
+                # convertir fecha a datetime
+                session_form['fecha'] = datetime.strptime(session_form['fecha'], '%Y-%m-%d %H:%M:%S')
+                session = Session(usuario_id=session_form['usuario_id'], fecha=session_form['fecha'], precio=session_form['precio'], id=current_id, entrenador_id=session_form['entrenador_id'])
+                current_id += 1
+                db.session.add(session)
+            db.session.commit()
+            return 'SUCCESS'
+        except Exception as e:
+            print(e)
+            return f"ERROR: {e}"
 
     elif request.method == 'PUT':
         session_data = request.get_json()
@@ -185,3 +197,18 @@ def route_session():
         db.session.commit()
         return 'SUCCESS'
 
+@app.route('/sessions/<entrenador_id_in>/<date>', methods=['GET'])
+def route_session_by_date(entrenador_id_in, date):
+    if request.method == 'GET':
+        sessions = Session.query.filter_by(entrenador_id=entrenador_id_in).all()
+        sessions_data = [session.to_dict() for session in sessions]
+        sessions_data = [session for session in sessions_data if session['fecha'].split(' ')[0] == date]
+        return jsonify(sessions_data)
+
+
+@app.route('/sessions/<entrenador_id_in>', methods=['GET'])
+def route_session_by_entrenador(entrenador_id_in):
+    if request.method == 'GET':
+        sessions = Session.query.filter_by(entrenador_id=entrenador_id_in).all()
+        sessions_data = [session.to_dict() for session in sessions]
+        return jsonify(sessions_data)
