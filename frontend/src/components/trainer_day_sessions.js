@@ -58,6 +58,7 @@ export const TableTrainer = () => {
                         </tbody>
                         
                 </table>
+                <button id="boton" onClick={handleClick}>Volver</button>
         </div>
     </div>
         </div>

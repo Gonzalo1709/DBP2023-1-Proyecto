@@ -156,7 +156,7 @@ export const Trainer = () => {
             <p id="text2">Bienvenido Entrenador {email_de_entrenador} </p>
           </div>
           <div className="Loading">
-            <img src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif" alt="loading" />
+            <img src="https://media.tenor.com/wpSo-8CrXqUAAAAi/loading-loading-forever.gif" alt="loading" />
           </div>
         </div>
       </div>
