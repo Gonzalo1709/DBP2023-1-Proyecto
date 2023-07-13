@@ -27,7 +27,7 @@ class User(db.Model):
 
     def __repr__(self):
         return f'<User {self.id}>'
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -45,7 +45,7 @@ class Trainer(db.Model):
 
     def __repr__(self):
         return f'<Trainer {self.id}>'
-    
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -55,11 +55,11 @@ class Trainer(db.Model):
         }
 
 
-class Sesion(db.Model):
-    __tablename__ = 'sesion'
+class Session(db.Model):
+    __tablename__ = 'session'
     id = db.Column(db.Integer, primary_key=True)
-    entrenador_id = db.Column(db.Integer, ForeignKey("trainer.id"), primary_key=True)
-    usuario_id = db.Column(db.Integer, ForeignKey("user.id"), primary_key=True)
+    entrenador_id = db.Column(db.Integer, db.ForeignKey("trainer.id"), nullable=False)
+    usuario_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     fecha = db.Column(db.DateTime, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
 
@@ -67,15 +67,15 @@ class Sesion(db.Model):
     usuario = relationship("User")
 
     def __repr__(self):
-        return f'<Sesion {self.id}>'
-    
+        return f'<Session {self.id}>'
+
     def to_dict(self):
         return {
             'id': self.id,
             'entrenador_id': self.entrenador_id,
             'usuario_id': self.usuario_id,
-            'fecha' : self.fecha,
-            'precio' : self.precio
+            'fecha': str(self.fecha),
+            'precio': self.precio
         }
 
 with app.app_context():
@@ -89,11 +89,12 @@ def route_users():
         users_data = [user.to_dict() for user in users]
         return jsonify(users_data)
     elif request.method == 'POST':
-        user_form = request.get_json()
-        if User.query.filter_by(email=user_form['email']).first() is not None:
-            return jsonify('USEREXISTS')
-        user = User(email=user_form['email'], password=user_form['password'])
-        db.session.add(user)
+        user_data = request.get_json()
+        for user_form in user_data:
+            if User.query.filter_by(email=user_form['email']).first() is not None:
+                return jsonify('USEREXISTS')
+            user = User(email=user_form['email'], password=user_form['password'])
+            db.session.add(user)
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'PUT':
@@ -109,12 +110,12 @@ def route_users():
         return 'SUCCESS'
 
 
+
 @app.route('/users/<id>', methods=['GET'])
 def route_user(id):
     if request.method == 'GET':
         user = User.query.get(id)
         return jsonify(user)
-
 
 @app.route('/trainers', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def route_trainers():
@@ -123,46 +124,64 @@ def route_trainers():
         trainers_data = [trainer.to_dict() for trainer in trainers]
         return jsonify(trainers_data)
     elif request.method == 'POST':
-        trainer = Trainer(email=request.get_json()['email'], password=request.get_json()['password'],calificacion = request.get_json()['calificacion'])
-        db.session.add(trainer)
+        trainer_data = request.get_json()
+        for trainer_form in trainer_data:
+            trainer = Trainer(email=trainer_form['email'], password=trainer_form['password'], calificacion=trainer_form['calificacion'])
+            db.session.add(trainer)
         db.session.commit()
         return 'SUCCESS'
     elif request.method == 'PUT':
-        trainer = Trainer.query.get(request.get_json()['id'])
-        trainer.email = request.get_json()['email']
-        trainer.password = request.get_json()['password']
-        db.session.commit()
+        trainer_data = request.get_json()
+        for trainer_form in trainer_data:
+            trainer = Trainer.query.get(trainer_form['id'])
+            trainer.email = trainer_form['email']
+            trainer.password = trainer_form['password']
+            db.session.commit()
         return 'SUCCESS'
     elif request.method == 'DELETE':
-        trainer = Trainer.query.get(request.get_json()['id'])
-        db.session.delete(trainer)
+        trainer_data = request.get_json()
+        for trainer_form in trainer_data:
+            trainer = Trainer.query.get(trainer_form['id'])
+            db.session.delete(trainer)
         db.session.commit()
         return 'SUCCESS'
 
 
-@app.route('/sesions', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def route_sesion():
+@app.route('/sessions', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def route_session():
     if request.method == 'GET':
-        sesions = User.query.all()
-        sesions_data = [sesion.to_dict() for sesion in sesions]
-        return jsonify(sesions_data)
+        sessions = Session.query.all()
+        sessions_data = [session.to_dict() for session in sessions]
+        return jsonify(sessions_data)
+
     elif request.method == 'POST':
-        sesion = Sesion(id=request.get_json()['id'], entrenador_id=request.get_json()['entrenador_id'],
-                        usuario_id=request.get_json()['usuario_id'], fecha=request.get_json()['fecha'],
-                        precio=request.get_json()['precio'])
-        db.session.add(sesion)
+        session_data = request.get_json()
+        for session_form in session_data:
+            session = Session(
+                id=session_form['id'],
+                entrenador_id=session_form['entrenador_id'],
+                usuario_id=session_form['usuario_id'],
+                precio=session_form['precio']
+            )
+            db.session.add(session)
         db.session.commit()
         return 'SUCCESS'
+
     elif request.method == 'PUT':
-        sesion = Sesion.query.get(request.get_json()['id'])
-        sesion.entrenador_id = request.get_json()['entrenador_id']
-        sesion.usuario_id = request.get_json()['usuario_id']
-        sesion.fecha = request.get_json()['fecha']
-        sesion.precio = request.get_json()['precio']
-        db.session.commit()
+        session_data = request.get_json()
+        for session_form in session_data:
+            session = Session.query.get(session_form['id'])
+            session.entrenador_id = session_form['entrenador_id']
+            session.usuario_id = session_form['usuario_id']
+            session.precio = session_form['precio']
+            db.session.commit()
         return 'SUCCESS'
+
     elif request.method == 'DELETE':
-        sesion = Sesion.query.get(request.get_json()['id'])
-        db.session.delete(sesion)
+        session_data = request.get_json()
+        for session_form in session_data:
+            session = Session.query.get(session_form['id'])
+            db.session.delete(session)
         db.session.commit()
         return 'SUCCESS'
+
