@@ -19,6 +19,7 @@
     border: 1px solid #fff;
     cursor: pointer;
     transition: all .5s ease;
+    width: 70%;
 }
 
 #CabeceraTablaHorizontal{
@@ -98,7 +99,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 60%;
     font-family: Arial, Helvetica, sans-serif;
     /*background: linear-gradient(27deg, #991B27 50%,#E64F25 50%);
     backdrop-filter: blur(10px);*/
@@ -217,6 +218,11 @@ body{
     align-items: right;
     margin:auto;
 }
+
+#backgrounded{
+    background-color: white;
+}
+
 #tr2{
     margin-bottom: 25px;
     align-items: right;
@@ -230,4 +236,10 @@ body{
 #imagen {
     background: none;
 }
-
+#Sesiones {
+    background-color: rgb(34, 34, 34);
+}
+#backgrounded{
+    color: whitesmoke;
+    background-color: rgb(34, 34, 34);
+}

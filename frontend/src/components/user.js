@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line
 import TableUser from './table_user';
 import './table_user.css'
 
@@ -7,8 +6,8 @@ export const Userlogin = () => {
   const currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
   const email_de_usuario = localStorage.getItem('email');
 
-  const handleClick = (event) => {
-    console.log(event.target._reactInternals.key);
+  const handleClick = (event) => {;
+    localStorage.setItem('day', event.target.value);
     window.location.href = "http://localhost:3000/table_user";
   };
 
@@ -17,9 +16,8 @@ export const Userlogin = () => {
     const days = [];
 
     for (let i = 1; i <= daysInMonth; i++) {
-      // eslint-disable-next-line
       const current_date = `${i}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-      days.push(<li key={i} onClick={handleClick}>{i}</li>);
+      days.push(<li key={i} value={i} onClick={handleClick}>{i}</li>);
     }
 
     return days;

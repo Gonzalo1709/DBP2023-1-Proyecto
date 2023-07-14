@@ -2,10 +2,6 @@ import React, { useEffect } from 'react'
 
 export const Trainer = () => {
 
-  // get the selected date from local storage
-
-  // Selected date is a number. Format it so that it is "YYYY-MM-DD"
-  // YYYY is current year, MM is current month, DD is selected date with leading 0 if necessary
   let currentMonth = new Date().toLocaleString('en-US', { month: 'long' });
   let email_de_entrenador = localStorage.getItem('email');
 
@@ -16,7 +12,6 @@ export const Trainer = () => {
     if (current_date < 10) {
       current_date = `0${current_date}`;
     }
-    // format month to where it has leading 0 if necessary
     if (new Date().getMonth() + 1 < 10) {
       current_date = `${new Date().getFullYear()}-0${new Date().getMonth() + 1}-${current_date}`;
     }
@@ -86,12 +81,10 @@ export const Trainer = () => {
   };
 
   const makeArrayOfDaysWithSessions = async () => {
-    // make a binary array of days with sessions. 1 if it has sessions, 0 if it doesn't
     let daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
     let daysArr = [];
 
     for (let i = 1; i <= daysInMonth; i++) {
-      // eslint-disable-next-line
       const current_date = `${i}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
       let sesionesEnElDia = false;
       sesionesEnElDia = await checkIfDateHasSessions(current_date);
@@ -113,9 +106,7 @@ export const Trainer = () => {
     const daysArr = localStorage.getItem('daysArr');
 
     for (let i = 1; i <= daysInMonth; i++) {
-      // eslint-disable-next-line
       const current_date = `${i}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-      // check index i-1 of daysArr to see if it has sessions. If it does, set li style "color: red"
       if (daysArr[i-1] === 1) {
         days.push(<li key={i} data-day={i} onClick={handleClick} style={{color: "red"}}>{i}</li>);
       }
@@ -147,8 +138,6 @@ export const Trainer = () => {
   console.log(loading);
   if (loading) {
     
-    // return a loading screen which will load the days and periodically check if they have been loaded
-    // when they are loaded, it will render the calendar
     return (
       <div>
         <div id="body2">

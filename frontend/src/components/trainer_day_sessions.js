@@ -24,7 +24,6 @@ export const TableTrainer = () => {
     };
 
     const handleClick = async (event) => {
-        // send the user back to the calendar page
         localStorage.removeItem('selectedDate');
         localStorage.removeItem('daySessions');
         window.location.href = "http://localhost:3000/trainer";
@@ -46,10 +45,10 @@ export const TableTrainer = () => {
                     </div>
                     <table id='days'>
                         <thead id="CabeceraTablaVertical">
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Precio</th>
-                                <th>Usuario</th>
+                            <tr id="Cabecilla">
+                                <th id="backgrounded">Fecha</th>
+                                <th id="backgrounded">Precio</th>
+                                <th id="backgrounded">Usuario</th>
                             </tr>
 
                             </thead>
